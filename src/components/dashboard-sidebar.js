@@ -15,6 +15,7 @@ import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
+import { Description, FileUpload, ListAlt, Science, Task } from '@mui/icons-material';
 
 const items = [
   {
@@ -24,18 +25,18 @@ const items = [
   },
   {
     href: '/customers',
-    icon: (<UsersIcon fontSize="small" />),
-    title: 'Customers'
+    icon: (<Task fontSize="small" />),
+    title: 'Wochenblick'
   },
   {
     href: '/products',
-    icon: (<ShoppingBagIcon fontSize="small" />),
-    title: 'Products'
+    icon: (<ListAlt fontSize="small" />),
+    title: 'Semesteransicht'
   },
   {
     href: '/account',
-    icon: (<UserIcon fontSize="small" />),
-    title: 'Account'
+    icon: (<Science fontSize="small" />),
+    title: 'Experiment'
   },
   {
     href: '/settings',
@@ -49,13 +50,13 @@ const items = [
   },
   {
     href: '/register',
-    icon: (<UserAddIcon fontSize="small" />),
-    title: 'Register'
+    icon: (<FileUpload fontSize="small" />),
+    title: 'Upload'
   },
   {
     href: '/404',
     icon: (<XCircleIcon fontSize="small" />),
-    title: 'Error'
+    title: 'Logout'
   }
 ];
 
@@ -124,24 +125,17 @@ export const DashboardSidebar = (props) => {
                   color="inherit"
                   variant="subtitle1"
                 >
-                  Acme Inc
+                  planBar
                 </Typography>
                 <Typography
                   color="neutral.400"
                   variant="body2"
                 >
-                  Your tier
-                  {' '}
-                  : Premium
+                  Dein Tool
+                  
                 </Typography>
               </div>
-              <SelectorIcon
-                sx={{
-                  color: 'neutral.500',
-                  width: 14,
-                  height: 14
-                }}
-              />
+            
             </Box>
           </Box>
         </div>
@@ -172,13 +166,13 @@ export const DashboardSidebar = (props) => {
             color="neutral.100"
             variant="subtitle2"
           >
-            Need more features?
+            Willst du weitere Schultools?
           </Typography>
           <Typography
             color="neutral.500"
             variant="body2"
           >
-            Check out our Pro solution template.
+            Check out Lernbaum.
           </Typography>
           <Box
             sx={{
@@ -192,12 +186,12 @@ export const DashboardSidebar = (props) => {
             }}
           >
             <img
-              alt="Go to pro"
-              src="/static/images/sidebar_pro.png"
+              alt="Lernbaum"
+              src="/static/images/Lernbaum.png"
             />
           </Box>
           <NextLink
-            href="https://material-kit-pro-react.devias.io/"
+            href="https://lernbaum.ch"
             passHref
           >
             <Button
@@ -208,7 +202,7 @@ export const DashboardSidebar = (props) => {
               sx={{ mt: 2 }}
               variant="contained"
             >
-              Pro Live Preview
+              Vorschau
             </Button>
           </NextLink>
         </Box>

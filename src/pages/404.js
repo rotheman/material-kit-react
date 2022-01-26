@@ -30,21 +30,21 @@ const NotFound = () => (
           <Typography
             align="center"
             color="textPrimary"
-            variant="h1"
+            variant="h2"
           >
-            404: The page you are looking for isn’t here
+            Diese Seite gibt es nicht
           </Typography>
           <Typography
             align="center"
             color="textPrimary"
             variant="subtitle2"
           >
-            You either tried some shady route or you came here by mistake.
-            Whichever it is, try using the navigation
+            Dein Pfad ist falsch oder du wurdest fälschlicherweise hier hingeleitet.
+            Gehe zurück über die Navigation.
           </Typography>
           <Box sx={{ textAlign: 'center' }}>
             <img
-              alt="Under development"
+              alt="404 | planBar"
               src="/static/images/undraw_page_not_found_su7k.svg"
               style={{
                 marginTop: 50,
@@ -54,19 +54,15 @@ const NotFound = () => (
               }}
             />
           </Box>
-          <NextLink
-            href="/"
-            passHref
-          >
             <Button
+              href="/"
               component="a"
               startIcon={(<ArrowBackIcon fontSize="small" />)}
               sx={{ mt: 3 }}
               variant="contained"
             >
-              Go back to dashboard
+              Zurück
             </Button>
-          </NextLink>
         </Box>
       </Container>
     </Box>

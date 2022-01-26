@@ -1,5 +1,6 @@
 import { Avatar, Box, Card, CardContent, Grid, LinearProgress, Typography } from '@mui/material';
 import InsertChartIcon from '@mui/icons-material/InsertChartOutlined';
+import { BarChart } from '@mui/icons-material';
 
 export const TasksProgress = (props) => (
   <Card
@@ -18,7 +19,7 @@ export const TasksProgress = (props) => (
             gutterBottom
             variant="overline"
           >
-            TASKS PROGRESS
+            Fortschritt
           </Typography>
           <Typography
             color="textPrimary"
@@ -35,7 +36,7 @@ export const TasksProgress = (props) => (
               width: 56
             }}
           >
-            <InsertChartIcon />
+            <BarChart />
           </Avatar>
         </Grid>
       </Grid>

@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
+import { useAppContext } from "../../lib/contextLib";
+
 import {
   Box,
   Button,
@@ -10,30 +12,34 @@ import {
   TextField
 } from '@mui/material';
 
-const states = [
+const buddies = [
   {
-    value: 'alabama',
-    label: 'Alabama'
+    value: 'FatCat',
+
+    
+    label: 'Garfield'
   },
   {
-    value: 'new-york',
-    label: 'New York'
+    value: 'Jumbo',
+    label: 'Jumbo'
   },
   {
-    value: 'san-francisco',
-    label: 'San Francisco'
+    value: 'Donald',
+    label: 'Donald'
   }
 ];
 
-export const AccountProfileDetails = (props) => {
+function AccountProfileDetails() {
   const [values, setValues] = useState({
     firstName: 'Katarina',
     lastName: 'Smith',
     email: 'demo@devias.io',
     phone: '',
-    state: 'Alabama',
+    state: 'Garfield',
     country: 'USA'
   });
+  const { currentUser, setCurrentUser } = useAppContext();
+
 
   const handleChange = (event) => {
     setValues({
@@ -46,7 +52,7 @@ export const AccountProfileDetails = (props) => {
     <form
       autoComplete="off"
       noValidate
-      {...props}
+      
     >
       <Card>
         <CardHeader
@@ -66,31 +72,15 @@ export const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                name="firstName"
+                label="Username"
+                name="username"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={currentUser.username}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
+            {/* <Grid
               item
               md={6}
               xs={12}
@@ -101,10 +91,10 @@ export const AccountProfileDetails = (props) => {
                 name="email"
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={currentUser.email}
                 variant="outlined"
               />
-            </Grid>
+            </Grid> */}
             <Grid
               item
               md={6}
@@ -112,46 +102,16 @@ export const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                label="Phone Number"
-                name="phone"
-                onChange={handleChange}
-                type="number"
-                value={values.phone}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Select State"
+                label="Buddy"
                 name="state"
                 onChange={handleChange}
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.state}
+                value={values.buddy}
                 variant="outlined"
               >
-                {states.map((option) => (
+                {buddies.map((option) => (
                   <option
                     key={option.value}
                     value={option.value}
@@ -182,3 +142,5 @@ export const AccountProfileDetails = (props) => {
     </form>
   );
 };
+export default memo(AccountProfileDetails);
+

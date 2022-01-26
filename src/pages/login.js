@@ -1,137 +1,95 @@
-import Head from 'next/head';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Facebook as FacebookIcon } from '../icons/facebook';
-import { Google as GoogleIcon } from '../icons/google';
+import Head from "next/head";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Facebook as FacebookIcon } from "../icons/facebook";
+import { Google as GoogleIcon } from "../icons/google";
+import { useAppContext } from "src/lib/contextLib";
+import { useState } from "react";
+import authService from "src/_services/auth.service";
 
 const Login = () => {
   const router = useRouter();
+  const { setCheckin } = useAppContext();
+  const [userName, setUserName] = useState("email@sluz.ch");
+  const [userPassword, setUserPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [userNameErr, setUserNameErr] = useState({});
+  const [userPasswordErr, setUserPasswordErr] = useState("");
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123'
+      email: "email@sluz.ch",
+      password: "",
     },
     validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email(
-          'Must be a valid email')
-        .max(255)
-        .required(
-          'Email is required'),
-      password: Yup
-        .string()
-        .max(255)
-        .required(
-          'Password is required')
+      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
+      password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: () => {
-      router.push('/');
-    }
+      console.log("email:" + formik.values.email + " password: " + formik.values.password)
+      setUserName(formik.values.email);
+      setUserPassword(formik.values.password);
+      setMessage("");
+      setLoading(true);
+
+      authService.login(userName, userPassword).then(
+        () => {
+          //hold back authentication and build the current session in App.js first
+          //in order to navigate to /dashboard during that time, global checkin must be enabled to pass the protected routes
+          setCheckin(true);
+          router.push("/");
+          window.location.reload();
+        },
+        (error) => {
+          const resMessage =
+           "Falsche Zugangsdaten";
+
+          setLoading(false);
+          setMessage(resMessage);
+        }
+      );
+    },
   });
 
   return (
     <>
       <Head>
-        <title>Login | Material Kit</title>
+        <title>Login | planBar Kit</title>
       </Head>
       <Box
         component="main"
         sx={{
-          alignItems: 'center',
-          display: 'flex',
+          alignItems: "center",
+          display: "flex",
           flexGrow: 1,
-          minHeight: '100%'
+          minHeight: "100%",
         }}
       >
         <Container maxWidth="sm">
-          <NextLink
-            href="/"
-            passHref
-          >
-            <Button
-              component="a"
-              startIcon={<ArrowBackIcon fontSize="small" />}
-            >
+          <NextLink href="/" passHref>
+            <Button component="a" startIcon={<ArrowBackIcon fontSize="small" />}>
               Dashboard
             </Button>
           </NextLink>
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
-              <Typography
-                color="textPrimary"
-                variant="h4"
-              >
-                Sign in
+              <Typography color="textPrimary" variant="h4">
+                Login
               </Typography>
-              <Typography
-                color="textSecondary"
-                gutterBottom
-                variant="body2"
-              >
-                Sign in on the internal platform
+              <Typography color="textSecondary" gutterBottom variant="body2">
+                Log dich in dein planBar ein
               </Typography>
             </Box>
-            <Grid
-              container
-              spacing={3}
-            >
-              <Grid
-                item
-                xs={12}
-                md={6}
-              >
-                <Button
-                  color="info"
-                  fullWidth
-                  startIcon={<FacebookIcon />}
-                  onClick={formik.handleSubmit}
-                  size="large"
-                  variant="contained"
-                >
-                  Login with Facebook
-                </Button>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                md={6}
-              >
-                <Button
-                  fullWidth
-                  color="error"
-                  startIcon={<GoogleIcon />}
-                  onClick={formik.handleSubmit}
-                  size="large"
-                  variant="contained"
-                >
-                  Login with Google
-                </Button>
-              </Grid>
-            </Grid>
-            <Box
-              sx={{
-                pb: 1,
-                pt: 3
-              }}
-            >
-              <Typography
-                align="center"
-                color="textSecondary"
-                variant="body1"
-              >
-                or login with email address
-              </Typography>
-            </Box>
+
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
               helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              label="Email"
               margin="normal"
               name="email"
               onBlur={formik.handleBlur}
@@ -144,7 +102,7 @@ const Login = () => {
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
               helperText={formik.touched.password && formik.errors.password}
-              label="Password"
+              label="Passwort"
               margin="normal"
               name="password"
               onBlur={formik.handleBlur}
@@ -157,34 +115,48 @@ const Login = () => {
               <Button
                 color="primary"
                 disabled={formik.isSubmitting}
+                disabled={loading}
                 fullWidth
                 size="large"
                 type="submit"
                 variant="contained"
               >
-                Sign In Now
+                {loading && <span className="spinner-border spinner-border-sm"></span>}
+                Login
               </Button>
             </Box>
-            <Typography
-              color="textSecondary"
-              variant="body2"
-            >
-              Don&apos;t have an account?
-              {' '}
-              <NextLink
-                href="/register"
+            {message && (
+              <div className="form-group">
+                <div className="alert alert-danger" role="alert">
+                  {message}
+                </div>
+              </div>
+            )}
+            <Typography color="textSecondary" variant="body2">
+              Noch kein Account?{" "}
+              <Link
+                to="/register"
+                variant="subtitle2"
+                underline="hover"
+                sx={{
+                  cursor: "pointer",
+                }}
               >
-                <Link
-                  to="/register"
-                  variant="subtitle2"
-                  underline="hover"
-                  sx={{
-                    cursor: 'pointer'
-                  }}
-                >
-                  Sign Up
-                </Link>
-              </NextLink>
+                Sign Up
+              </Link>
+            </Typography>
+            <Typography color="textSecondary" variant="body2">
+              Fragen zum Projekt?{" "}
+              <Link
+                to="/faq"
+                variant="subtitle2"
+                underline="hover"
+                sx={{
+                  cursor: "pointer",
+                }}
+              >
+                Consent
+              </Link>
             </Typography>
           </form>
         </Container>

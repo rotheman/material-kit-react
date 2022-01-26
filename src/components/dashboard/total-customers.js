@@ -1,6 +1,7 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import PeopleIcon from '@mui/icons-material/PeopleOutlined';
+import { ThumbUp } from '@mui/icons-material';
 
 export const TotalCustomers = (props) => (
   <Card {...props}>
@@ -16,13 +17,13 @@ export const TotalCustomers = (props) => (
             gutterBottom
             variant="overline"
           >
-            TOTAL CUSTOMERS
+            TOTAL Erledigt
           </Typography>
           <Typography
             color="textPrimary"
             variant="h4"
           >
-            1,6k
+            200
           </Typography>
         </Grid>
         <Grid item>
@@ -33,7 +34,7 @@ export const TotalCustomers = (props) => (
               width: 56
             }}
           >
-            <PeopleIcon />
+            <ThumbUp />
           </Avatar>
         </Grid>
       </Grid>
@@ -57,7 +58,7 @@ export const TotalCustomers = (props) => (
           color="textSecondary"
           variant="caption"
         >
-          Since last month
+          Seit letzter Woche
         </Typography>
       </Box>
     </CardContent>

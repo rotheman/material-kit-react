@@ -89,10 +89,10 @@ export const Sales = (props) => {
             endIcon={<ArrowDropDownIcon fontSize="small" />}
             size="small"
           >
-            Last 7 days
+            Letzte Woche
           </Button>
         )}
-        title="Latest Sales"
+        title="Dein Workload"
       />
       <Divider />
       <CardContent>
@@ -121,7 +121,7 @@ export const Sales = (props) => {
           endIcon={<ArrowRightIcon fontSize="small" />}
           size="small"
         >
-          Overview
+          Nächste Woche
         </Button>
       </Box>
     </Card>

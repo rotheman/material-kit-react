@@ -1,8 +1,9 @@
 import { Doughnut } from 'react-chartjs-2';
-import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
+import { Box, Button, Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import PhoneIcon from '@mui/icons-material/Phone';
 import TabletIcon from '@mui/icons-material/Tablet';
+import { ArrowRight, CheckCircle, RadioButtonCheckedOutlined, RunningWithErrors } from '@mui/icons-material';
 
 export const TrafficByDevice = (props) => {
   const theme = useTheme();
@@ -11,13 +12,13 @@ export const TrafficByDevice = (props) => {
     datasets: [
       {
         data: [63, 15, 22],
-        backgroundColor: ['#3F51B5', '#e53935', '#FB8C00'],
+        backgroundColor: ['#e53935', '#FB8C00', 'green'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    labels: ['Desktop', 'Tablet', 'Mobile']
+    labels: ['Offen', 'Am Laufen', 'Fertig']
   };
 
   const options = {
@@ -44,28 +45,28 @@ export const TrafficByDevice = (props) => {
 
   const devices = [
     {
-      title: 'Desktop',
+      title: 'Offen',
       value: 63,
-      icon: LaptopMacIcon,
-      color: '#3F51B5'
-    },
-    {
-      title: 'Tablet',
-      value: 15,
-      icon: TabletIcon,
+      icon: RadioButtonCheckedOutlined,
       color: '#E53935'
     },
     {
-      title: 'Mobile',
-      value: 23,
-      icon: PhoneIcon,
+      title: 'Am Laufen',
+      value: 15,
+      icon: RunningWithErrors,
       color: '#FB8C00'
+    },
+    {
+      title: 'Fertig',
+      value: 23,
+      icon: CheckCircle,
+      color: 'green'
     }
   ];
 
   return (
     <Card {...props}>
-      <CardHeader title="Traffic by Device" />
+      <CardHeader title="Dein Fortschritt" />
       <Divider />
       <CardContent>
         <Box
@@ -117,6 +118,22 @@ export const TrafficByDevice = (props) => {
           ))}
         </Box>
       </CardContent>
+      <Divider />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          p: 2
+        }}
+      >
+        <Button
+          color="primary"
+          endIcon={<ArrowRight fontSize="small" />}
+          size="small"
+        >
+          Anpassen
+        </Button>
+      </Box>
     </Card>
   );
 };
